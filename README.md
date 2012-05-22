@@ -1,5 +1,5 @@
 forked from yodiaditya / vim-pydjango
-
+add coffee-script /vimdiff color scheme
 
 # VIM for Python and Django Development
 
