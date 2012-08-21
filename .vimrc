@@ -17,6 +17,8 @@ Bundle 'fholgado/minibufexpl.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'sjl/gundo.vim'
+Bundle 'mattn/gist-vim'
+Bundle 'mattn/webapi-vim'
 
 " Color scheme
 Bundle 'cschlueter/vim-mustang'
@@ -38,12 +40,11 @@ Bundle 'scrooloose/syntastic'
 Bundle "Shougo/neocomplcache"
 
 " Python Syntax Checker
-Bundle 'kevinw/pyflakes-vim'
-Bundle 'vim-scripts/pep8'
 Bundle 'vim-scripts/Pydiction'
-Bundle "vim-scripts/indentpython.vim"
+Bundle "klen/python-mode"
 
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'Raimondi/VimRegEx.vim'
 
 " Versioning System
 Bundle 'tpope/vim-fugitive'
@@ -110,6 +111,7 @@ set autowrite
 let mapleader=","
 let g:mapleader=","
 
+let g:pymode_run_key = 'R'
 " Fast saving with leader + w
 nmap <leader>w :w!<cr>
 
@@ -165,7 +167,7 @@ set tm=500
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable "Enable syntax hl
 
-set shell=/bin/bash
+set shell=/bin/zsh
 
 set guioptions-=T
 set background=dark
@@ -245,16 +247,18 @@ set wildmenu                  " Menu completion in command mode on <Tab>
 set pastetoggle=<F3>          " Press F3 for toggle paste mode
 set cursorline
 set colorcolumn=80 " Mark 80th column with a red line
-
 " Taken From http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
 autocmd FileType python highlight OverLength ctermbg=darkred ctermfg=white guibg=#FFD9D9
 autocmd FileType python match OverLength /\%81v.\+/
+
+" gist setting
+let g:gist_use_password_in_gitconfig = 1
 
 " Paste using ,v in normal mode
 nnoremap <leader>v "+gP
 
 " Set default environment based on current edited files
-autocmd BufEnter * silent! lcd %:p:h
+"autocmd BufEnter * silent! lcd %:p:h
 
 " The best thing here! 
 " In insert mode, you can paste from clipboard using CTRL+v
@@ -404,20 +408,6 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " CUSTOM CONFIGURATION FOR INSTALLED PLUGIN
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pep8 using F6
-" You can change with this :
-let g:pep8_map = '<F6>' 
-
-" Pydiction
-let g:pydiction_location='/home/ubuntu/.vim/bundle/Pydiction/complete-dict'
-
-"""" PYTHON STYLE """"
-let python_highlight_all=1 " Enable all plugin's highlighting.
-let python_slow_sync=1 " For fast machines.
-let python_print_as_function=1 " Color 'print' function.
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FuzzFinder Shorcuts. Using F2 for opening FuzzyFinderTextMate
 map <leader>f :FufFileWithCurrentBufferDir<CR>
@@ -578,6 +568,8 @@ let g:bufExplorerSortBy = "name"
 
 autocmd BufRead,BufNew :call UMiniBufExplorer
 
+"coffee intent"
+au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 """""""""""""""""""""""""""""""""""
 " Stolen from http://dev.gentoo.org/~bass/configs/vimrc.html
 "
@@ -604,7 +596,10 @@ if has("autocmd")
                 \ windo call FixMiniBufExplorerTitle() |
                 \ exec oldwinnr . " wincmd w"
 endif
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+"
+" auto coffeemake and smart-fold "
+au BufWritePost *.coffee silent CoffeeMake!
+au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 
 "vimdiff color"
 highlight DiffAdd cterm=bold ctermbg=245 ctermfg=white
