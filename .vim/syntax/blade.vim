@@ -1,0 +1,1 @@
+/home/ghost/Workspace/cppproject/blade/vim/syntax/blade.vim

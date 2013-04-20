@@ -1,0 +1,1 @@
+/home/ghost/Workspace/cppproject/blade/vim/indent/blade.vim
