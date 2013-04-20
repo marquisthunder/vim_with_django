@@ -19,6 +19,7 @@ Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'sjl/gundo.vim'
 Bundle 'mattn/gist-vim'
 Bundle 'mattn/webapi-vim'
+Bundle 'ivanov/vim-ipython'
 
 " Color scheme
 Bundle 'cschlueter/vim-mustang'
@@ -42,15 +43,16 @@ Bundle "Shougo/neocomplcache"
 " Python Syntax Checker
 Bundle 'vim-scripts/Pydiction'
 Bundle "klen/python-mode"
+Bundle "davidhalter/jedi-vim"
 
+Bundle 'digitaltoad/vim-jade'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'Raimondi/VimRegEx.vim'
+Bundle 'drichard/vim-brunch'
 
 " Versioning System
 Bundle 'tpope/vim-fugitive'
 
-"sudo
-Bundle 'sudo.vim'
 
 filetype plugin indent on     " required! 
 
@@ -568,8 +570,6 @@ let g:bufExplorerSortBy = "name"
 
 autocmd BufRead,BufNew :call UMiniBufExplorer
 
-"coffee intent"
-au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 """""""""""""""""""""""""""""""""""
 " Stolen from http://dev.gentoo.org/~bass/configs/vimrc.html
 "
@@ -598,11 +598,17 @@ if has("autocmd")
 endif
 "
 " auto coffeemake and smart-fold "
-au BufWritePost *.coffee silent CoffeeMake!
+"au BufWritePost *.coffee silent CoffeeMake!
 au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 
+" brunch settings
+let g:brunch_ext_template='jade'
+let g:brunch_path_app='app/scripts'
 "vimdiff color"
 highlight DiffAdd cterm=bold ctermbg=245 ctermfg=white
 highlight DiffChange cterm=bold ctermbg=100 ctermfg=black
 highlight DiffText cterm=bold ctermbg=140 ctermfg=white
 highlight DiffDelete cterm=bold ctermbg=180 ctermfg=black
+augroup filetype
+    autocmd! BufRead,BufNewFile BUILD set filetype=blade
+augroup end
